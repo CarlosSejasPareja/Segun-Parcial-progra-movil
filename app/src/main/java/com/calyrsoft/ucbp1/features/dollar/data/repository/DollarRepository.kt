@@ -18,9 +18,13 @@ class DollarRepository(
 //        return flow {
 //            emit(DollarModel("123", "456"))
 //        }
-        return realTimeRemoteDataSource.getDollarUpdates().onEach {
-                localDataSource.insert(it)
-            }
+        return realTimeRemoteDataSource.getDollarUpdates().onEach { model ->
+            val enriched = model.copy(
+                dollarUsdt = model.dollarUsdt ?: "7.05",
+                dollarUsdc = model.dollarUsdc ?: "7.07"
+            )
+            localDataSource.insert(enriched)
+        }
 
 //        return realTimeRemoteDataSource.getDollarUpdates()
 

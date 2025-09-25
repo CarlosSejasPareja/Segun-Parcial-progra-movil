@@ -7,6 +7,8 @@ fun DollarEntity.toModel() : DollarModel {
     return DollarModel(
         dollarOfficial = dollarOfficial,
         dollarParallel = dollarParallel,
+        dollarUsdt = dollarUsdt,
+        dollarUsdc = dollarUsdc,
         timestamp = timestamp
     )
 }
@@ -16,6 +18,8 @@ fun DollarModel.toEntity() : DollarEntity {
     return DollarEntity(
         dollarOfficial = dollarOfficial,
         dollarParallel = dollarParallel,
+        dollarUsdt = dollarUsdt,
+        dollarUsdc = dollarUsdc,
         timestamp = timestamp
     )
 }

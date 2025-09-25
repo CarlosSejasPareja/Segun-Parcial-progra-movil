@@ -12,11 +12,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
     val state = viewModelDollar.uiState.collectAsState()
-
+    fun formatTs(ts: Long): String {
+        val sdf = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+        return sdf.format(Date(ts))
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -35,6 +41,11 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
                 Text("📡 EN VIVO")
                 Text("Oficial: ${stateValue.data.dollarOfficial}")
                 Text("Paralelo: ${stateValue.data.dollarParallel}")
+                Text("USDT: ${stateValue.data.dollarUsdt ?: "—"}")
+                Text("USDC: ${stateValue.data.dollarUsdc ?: "—"}")
+                Text("Actualizado: ${formatTs(stateValue.data.timestamp)}")
+
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -63,8 +74,11 @@ fun DollarScreen(viewModelDollar: DollarViewModel = koinViewModel()) {
                             Text(
                                 "Oficial: ${item.dollarOfficial} | " +
                                         "Paralelo: ${item.dollarParallel} | " +
+                                        "USDT: ${item.dollarUsdt ?: "—"} | " +
+                                        "USDC: ${item.dollarUsdc ?: "—"}" +
                                         "Timestamp: ${item.timestamp}"
                             )
+                            Text("Actualizado: ${formatTs(item.timestamp)}")
                             Spacer(modifier = Modifier.height(4.dp))
                             Button(
                                 modifier = Modifier.fillMaxWidth(),
